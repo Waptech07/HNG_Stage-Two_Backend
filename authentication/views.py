@@ -15,7 +15,7 @@ class RegisterView(APIView):
         if serializer.is_valid():
             try:
                 user = serializer.save()
-                org_name = f"{user.first_name}'s Organisation"
+                org_name = f"{user.firstName}'s Organisation"
                 org = Organisation.objects.create(orgId=str(uuid.uuid4()), name=org_name)
                 org.users.add(user)
                 org.save()
@@ -40,6 +40,17 @@ class LoginView(APIView):
     def post(self, request):
         email = request.data.get('email')
         password = request.data.get('password')
+
+        if not email:
+            return Response({
+                'errors': [{'field': 'email', 'message': 'Email is required'}]
+            }, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
+        if not password:
+            return Response({
+                'errors': [{'field': 'password', 'message': 'Password is required'}]
+            }, status=status.HTTP_422_UNPROCESSABLE_ENTITY)
+
         try:
             user = User.objects.get(email=email)
             if user.check_password(password):
