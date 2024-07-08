@@ -4,21 +4,21 @@ from .models import User, Organisation
 
 # Register your models here.
 class UserAdmin(BaseUserAdmin):
-    list_display = ('email', 'first_name', 'last_name', 'is_staff', 'is_superuser')
+    list_display = ('email', 'firstName', 'lastName', 'is_staff', 'is_superuser')
     list_filter = ('is_staff', 'is_superuser', 'is_active')
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'phone')}),
+        ('Personal info', {'fields': ('firstName', 'lastName', 'phone')}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser')}),
     )
     
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'first_name', 'last_name', 'password1', 'password2', 'is_staff', 'is_superuser'),
+            'fields': ('email', 'firstName', 'lastName', 'password1', 'password2', 'is_staff', 'is_superuser'),
         }),
     )
-    search_fields = ('email', 'first_name', 'last_name')
+    search_fields = ('email', 'firstName', 'lastName')
     ordering = ('email',)
     filter_horizontal = ()
 
